@@ -22,61 +22,54 @@ interface Materia {
   imports: [CommonModule, FormsModule],
   template: `
     <div class="materias-container">
-      <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="h4 mb-0" style="color: var(--text-primary); font-weight: 600;">Gestión de materias</h2>
-        <button class="btn btn-warning px-4 py-2" style="border-radius: 8px; font-weight: 500;">
-          Añadir
-        </button>
+      <div class="materias-header">
+        <h2 class="materias-title">Gestión de materias</h2>
+        <div class="header-controls">
+          <input 
+            type="text" 
+            class="search-input" 
+            placeholder="Buscar materia..."
+            [(ngModel)]="searchTerm">
+          <button class="add-button">Añadir</button>
+        </div>
       </div>
       
-      <div class="mb-4">
-        <input 
-          type="text" 
-          class="form-control search-input" 
-          placeholder="Buscar materia..."
-          [(ngModel)]="searchTerm"
-          style="max-width: 300px; border-radius: 8px; border: 1px solid var(--border-color); padding: 0.75rem 1rem;">
-      </div>
-      
-      <div class="table-container">
-        <table class="table table-borderless">
+      <div class="materias-table-container">
+        <table class="materias-table">
           <thead>
-            <tr class="table-header">
-              <th style="color: var(--text-secondary); font-weight: 500; font-size: 0.875rem; padding: 1rem 1.5rem;">Materia</th>
-              <th style="color: var(--text-secondary); font-weight: 500; font-size: 0.875rem; padding: 1rem 1.5rem;">Cuatrimestre</th>
-              <th style="color: var(--text-secondary); font-weight: 500; font-size: 0.875rem; padding: 1rem 1.5rem;">Tiempo invertido</th>
-              <th style="color: var(--text-secondary); font-weight: 500; font-size: 0.875rem; padding: 1rem 1.5rem;">Notas (P1 • P2 • Final)</th>
-              <th style="color: var(--text-secondary); font-weight: 500; font-size: 0.875rem; padding: 1rem 1.5rem;">Acciones</th>
+            <tr class="materias-table-header">
+              <th>Materia</th>
+              <th>Cuatrimestre</th>
+              <th>Tiempo invertido</th>
+              <th>Notas (P1 • P2 • Final)</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let materia of filteredMaterias" class="materia-row">
-              <td class="d-flex align-items-center" style="padding: 1.5rem;">
-                <div class="materia-icon me-3" [style.background-color]="materia.color">
+            <tr *ngFor="let materia of filteredMaterias" class="materias-table-row">
+              <td class="materia-cell">
+                <div class="materia-color-indicator" [style.background-color]="materia.color"></div>
+                <div class="materia-icon" [style.background-color]="materia.color">
                   {{ materia.icon }}
                 </div>
-                <span style="font-weight: 500; color: var(--text-primary);">{{ materia.name }}</span>
+                <span class="materia-name">{{ materia.name }}</span>
               </td>
-              <td style="padding: 1.5rem; color: var(--text-secondary);">{{ materia.cuatrimestre }}</td>
-              <td style="padding: 1.5rem;">
-                <span class="time-badge">{{ materia.tiempoInvertido }}</span>
+              <td class="cuatrimestre-cell">{{ materia.cuatrimestre }}</td>
+              <td class="tiempo-cell">
+                <span class="tiempo-badge">{{ materia.tiempoInvertido }}</span>
               </td>
-              <td style="padding: 1.5rem; color: var(--text-secondary);">{{ materia.notas }}</td>
-              <td style="padding: 1.5rem;">
-                <div class="d-flex gap-3">
-                  <button class="action-btn edit-btn" (click)="editMateria(materia)">Editar</button>
-                  <button class="action-btn delete-btn" (click)="confirmDelete(materia)">Eliminar</button>
-                </div>
+              <td class="notas-cell">{{ materia.notas }}</td>
+              <td class="acciones-cell">
+                <button class="action-btn edit-btn" (click)="editMateria(materia)">Editar</button>
+                <button class="action-btn delete-btn" (click)="confirmDelete(materia)">Eliminar</button>
               </td>
             </tr>
           </tbody>
         </table>
-      </div>
       
-      <div class="mt-3">
-        <small style="color: var(--text-secondary);">
+        <div class="materias-tip">
           Tip: desde "Editar" puedes abrir el formulario de Agregar/Editar materia (el que diseñamos) con los datos precargados.
-        </small>
+        </div>
       </div>
     </div>
 
