@@ -88,19 +88,57 @@ body {
   min-height: 100vh;
 }
 
-/* Timer Styles */
+/* Timesheet Styles */
+.timesheet-container {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border-color);
+  margin: 0;
+}
+
+.timesheet-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.week-selector {
+  background: #F3F4F6;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  color: var(--text-secondary);
+  display: inline-block;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.timer-section {
+  background: white;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
 .timer-row {
   display: flex;
   align-items: center;
   gap: 1rem;
-  flex-wrap: wrap;
 }
 
-.timer-inputs {
+.timer-question {
+  flex: 2;
+}
+
+.timer-selects {
   display: flex;
   gap: 0.75rem;
   flex: 1;
-  min-width: 0;
 }
 
 .timer-input {
@@ -109,7 +147,6 @@ body {
   border-radius: 8px;
   font-size: 0.875rem;
   background-color: white;
-  transition: all 0.2s ease;
 }
 
 .timer-input:focus {
@@ -119,14 +156,12 @@ body {
 }
 
 .description-input {
-  flex: 2;
-  min-width: 200px;
+  width: 100%;
 }
 
 .subject-select,
 .activity-select {
-  flex: 1;
-  min-width: 120px;
+  width: 140px;
 }
 
 .timer-controls {
@@ -138,7 +173,7 @@ body {
 .timer-display {
   font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
   font-size: 1.5rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-primary);
   min-width: 100px;
   text-align: center;
@@ -172,7 +207,49 @@ body {
   box-shadow: none;
 }
 
-/* Table Styles */
+/* Sessions Section */
+.sessions-section {
+  margin-top: 2rem;
+}
+
+.sessions-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+}
+
+.sessions-table-container {
+  background: white;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.sessions-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.sessions-table-header {
+  background-color: #FAFBFC;
+  border-bottom: 1px solid #F1F3F4;
+}
+
+.sessions-table-header th {
+  font-weight: 600;
+  font-size: 0.75rem;
+  color: #6B7280;
+  padding: 1rem 1.5rem;
+  border: none;
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Legacy Table Styles (for compatibility) */
 .table {
   background-color: white;
   border-radius: 12px;
@@ -210,6 +287,42 @@ body {
   vertical-align: middle;
 }
 
+.sessions-table-row {
+  border-bottom: 1px solid #F8F9FA;
+  transition: all 0.2s ease;
+}
+
+.sessions-table-row:hover {
+  background-color: #FAFBFC;
+}
+
+.sessions-table-row:last-child {
+  border-bottom: none;
+}
+
+.sessions-table-row td {
+  padding: 1.25rem 1.5rem;
+  vertical-align: middle;
+  border: none;
+  font-size: 0.875rem;
+}
+
+.description-cell {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.subject-cell {
+  /* Styling handled by subject-tag */
+}
+
+.time-cell,
+.duration-cell {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+}
+
 .session-row td {
   font-size: 0.875rem;
 }
@@ -222,6 +335,11 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+.subject-color-dot {
+  font-size: 0.75rem;
+  margin-right: 0.25rem;
 }
 
 .subject-icon {
@@ -243,14 +361,20 @@ body {
   color: #4299E1;
 }
 
-.week-selector {
-  background: var(--card-background);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 0.75rem 1rem;
+.empty-state {
+  text-align: center;
+  padding: 3rem 2rem;
+  color: var(--text-muted);
+}
+
+.empty-state p {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.empty-state small {
+  font-size: 0.875rem;
   color: var(--text-secondary);
-  margin-bottom: 2rem;
-  display: inline-block;
 }
 
 /* Materias Component Styles */
