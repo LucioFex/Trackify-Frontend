@@ -65,7 +65,7 @@ interface Materia {
               <td style="padding: 1.5rem;">
                 <div class="d-flex gap-3">
                   <button class="action-btn edit-btn" (click)="editMateria(materia)">Editar</button>
-                  <button class="action-btn delete-btn">Eliminar</button>
+                  <button class="action-btn delete-btn" (click)="confirmDelete(materia)">Eliminar</button>
                 </div>
               </td>
             </tr>
@@ -92,19 +92,19 @@ interface Materia {
           <div class="row">
             <div class="col-md-7">
               <!-- Nombre de la materia -->
-              <div class="form-group mb-3">
+              <div class="form-group mb-4">
                 <label class="form-label">Nombre de la materia</label>
                 <input 
                   type="text" 
-                  class="form-control" 
+                  class="form-control modal-input" 
                   [(ngModel)]="editingMateria.name"
                   placeholder="Nombre de la materia">
               </div>
               
               <!-- Cuatrimestre -->
-              <div class="form-group mb-3">
+              <div class="form-group mb-4">
                 <label class="form-label">Cuatrimestre</label>
-                <select class="form-control" [(ngModel)]="editingMateria.cuatrimestre">
+                <select class="form-control modal-input" [(ngModel)]="editingMateria.cuatrimestre">
                   <option value="2025 • 1C">2025 • 1C</option>
                   <option value="2025 • 2C">2025 • 2C</option>
                   <option value="2024 • 2C">2024 • 2C</option>
@@ -112,7 +112,7 @@ interface Materia {
               </div>
               
               <!-- Icono de la materia -->
-              <div class="form-group mb-3">
+              <div class="form-group mb-4">
                 <label class="form-label">Icono de la materia</label>
                 <div class="icon-selector">
                   <div class="current-icon" [style.background-color]="editingMateria.color">
@@ -123,7 +123,7 @@ interface Materia {
               </div>
               
               <!-- Color de la serie -->
-              <div class="form-group mb-3">
+              <div class="form-group mb-4">
                 <label class="form-label">Color de la serie</label>
                 <div class="color-palette">
                   <div 
@@ -138,9 +138,9 @@ interface Materia {
               
               <!-- Objetivos -->
               <div class="form-group mb-4">
-                <label class="form-label">Objetivos (opcional)</label>
+                <label class="form-label text-muted">Objetivos (opcional)</label>
                 <textarea 
-                  class="form-control" 
+                  class="form-control modal-input" 
                   rows="3"
                   [(ngModel)]="editingMateria.objetivos"
                   placeholder="Aprobar con 8+, reforzar integrales, práctica semanal..."></textarea>
@@ -155,12 +155,12 @@ interface Materia {
                   <div class="exam-inputs">
                     <input 
                       type="number" 
-                      class="form-control exam-input" 
+                      class="form-control exam-input modal-input" 
                       [(ngModel)]="editingMateria.parcial1"
                       step="0.1"
                       min="0"
                       max="10">
-                    <span class="exam-date">dd/mm/aaaa</span>
+                    <input type="date" class="form-control exam-date-input modal-input">
                   </div>
                 </div>
                 
@@ -169,12 +169,12 @@ interface Materia {
                   <div class="exam-inputs">
                     <input 
                       type="number" 
-                      class="form-control exam-input" 
+                      class="form-control exam-input modal-input" 
                       [(ngModel)]="editingMateria.parcial2"
                       step="0.1"
                       min="0"
                       max="10">
-                    <span class="exam-date">dd/mm/aaaa</span>
+                    <input type="date" class="form-control exam-date-input modal-input">
                   </div>
                 </div>
                 
@@ -183,18 +183,18 @@ interface Materia {
                   <div class="exam-inputs">
                     <input 
                       type="number" 
-                      class="form-control exam-input" 
+                      class="form-control exam-input modal-input" 
                       [(ngModel)]="editingMateria.final"
                       step="0.1"
                       min="0"
                       max="10">
-                    <span class="exam-date">dd/mm/aaaa</span>
+                    <input type="date" class="form-control exam-date-input modal-input">
                   </div>
                 </div>
               </div>
             </div>
             
-            <div class="col-md-5">
+            <div class="col-md-6">
               <!-- Resumen -->
               <div class="summary-card">
                 <h4 class="summary-title">Resumen</h4>
@@ -260,11 +260,45 @@ interface Materia {
         </div>
       </div>
     </div>
+
+    <!-- Modal de Confirmación de Eliminación -->
+    <div class="modal-overlay" *ngIf="showDeleteModal" (click)="closeDeleteModal()">
+      <div class="delete-modal" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <h3 class="modal-title">Eliminar materia</h3>
+          <button class="close-btn" (click)="closeDeleteModal()">×</button>
+        </div>
+        
+        <div class="modal-body">
+          <div class="delete-confirmation">
+            <div class="warning-icon">⚠️</div>
+            <h4>¿Estás seguro de que quieres eliminar esta materia?</h4>
+            <p class="delete-warning">
+              Se eliminará permanentemente <strong>{{ materiaToDelete?.name }}</strong> 
+              y todos los datos asociados, incluyendo:
+            </p>
+            <ul class="delete-items">
+              <li>Todas las sesiones de estudio registradas</li>
+              <li>Notas de exámenes</li>
+              <li>Objetivos y configuración</li>
+            </ul>
+            <p class="delete-note">Esta acción no se puede deshacer.</p>
+          </div>
+        </div>
+        
+        <div class="modal-footer">
+          <button class="btn btn-secondary" (click)="closeDeleteModal()">Cancelar</button>
+          <button class="btn btn-danger" (click)="deleteMateria()">Eliminar materia</button>
+        </div>
+      </div>
+    </div>
   `
 })
 export class MateriasComponent {
   searchTerm = '';
   showEditModal = false;
+  showDeleteModal = false;
+  materiaToDelete: any = null;
   editingMateria: any = {};
   
   colorOptions = [
@@ -344,6 +378,23 @@ export class MateriasComponent {
   editMateria(materia: Materia) {
     this.editingMateria = { ...materia };
     this.showEditModal = true;
+  }
+  
+  confirmDelete(materia: Materia) {
+    this.materiaToDelete = materia;
+    this.showDeleteModal = true;
+  }
+  
+  deleteMateria() {
+    if (this.materiaToDelete) {
+      this.materias = this.materias.filter(m => m.id !== this.materiaToDelete.id);
+      this.closeDeleteModal();
+    }
+  }
+  
+  closeDeleteModal() {
+    this.showDeleteModal = false;
+    this.materiaToDelete = null;
   }
   
   closeModal() {
