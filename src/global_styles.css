@@ -1,0 +1,228 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+:root {
+  --primary-color: #2D3748;
+  --secondary-color: #4A5568;
+  --accent-color: #F6AD55;
+  --background-color: #F7FAFC;
+  --card-background: #FFFFFF;
+  --text-primary: #2D3748;
+  --text-secondary: #718096;
+  --border-color: #E2E8F0;
+  --success-color: #48BB78;
+  --warning-color: #ED8936;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+.sidebar {
+  background-color: var(--primary-color);
+  min-height: 100vh;
+  width: 240px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.main-content {
+  margin-left: 240px;
+  padding: 2rem;
+  min-height: 100vh;
+  background-color: var(--background-color);
+}
+
+.nav-item {
+  padding: 0.75rem 1.5rem;
+  color: #A0AEC0;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: all 0.2s ease;
+  border-left: 3px solid transparent;
+}
+
+.nav-item:hover,
+.nav-item.active {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  border-left-color: var(--accent-color);
+}
+
+.timer-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.timer-inputs {
+  display: flex;
+  gap: 0.75rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.timer-input {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  background-color: white;
+  transition: all 0.2s ease;
+}
+
+.timer-input:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(246, 173, 85, 0.1);
+}
+
+.description-input {
+  flex: 2;
+  min-width: 200px;
+}
+
+.subject-select,
+.activity-select {
+  flex: 1;
+  min-width: 120px;
+}
+
+.timer-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+.timer-display {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-family: 'Courier New', monospace;
+  min-width: 120px;
+  text-align: center;
+}
+
+.play-button {
+  background-color: var(--accent-color);
+  border: none;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.25rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(246, 173, 85, 0.3);
+  cursor: pointer;
+}
+
+.play-button:hover {
+  background-color: #ED8936;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(246, 173, 85, 0.4);
+}
+
+.play-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.session-card {
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  transition: all 0.2s ease;
+}
+
+.session-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.subject-tag {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.subject-programacion {
+  background-color: rgba(139, 69, 19, 0.1);
+  color: #8B4513;
+}
+
+.subject-calculo {
+  background-color: rgba(72, 187, 120, 0.1);
+  color: #48BB78;
+}
+
+.subject-fisica {
+  background-color: rgba(66, 153, 225, 0.1);
+  color: #4299E1;
+}
+
+.week-selector {
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  display: inline-block;
+}
+
+.logo {
+  color: var(--accent-color);
+  font-weight: 700;
+  font-size: 1.5rem;
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+  
+  .main-content {
+    margin-left: 0;
+    padding: 1rem;
+  }
+  
+  .timer-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .timer-inputs {
+    flex-direction: column;
+  }
+  
+  .timer-controls {
+    justify-content: center;
+    margin-top: 1rem;
+  }
+}
