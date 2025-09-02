@@ -202,6 +202,90 @@ body {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* Materias Component Styles */
+.materias-container {
+  max-width: 1200px;
+}
+
+.table-container {
+  background: var(--card-background);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+}
+
+.table-header {
+  background-color: #F8F9FA;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.materia-row {
+  border-bottom: 1px solid #F1F3F4;
+  transition: background-color 0.2s ease;
+}
+
+.materia-row:hover {
+  background-color: #FAFBFC;
+}
+
+.materia-row:last-child {
+  border-bottom: none;
+}
+
+.materia-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: white;
+}
+
+.time-badge {
+  background-color: #F3F4F6;
+  color: var(--text-secondary);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-family: 'Courier New', monospace;
+}
+
+.action-btn {
+  background: none;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.edit-btn {
+  color: #4299E1;
+}
+
+.edit-btn:hover {
+  background-color: rgba(66, 153, 225, 0.1);
+}
+
+.delete-btn {
+  color: #E53E3E;
+}
+
+.delete-btn:hover {
+  background-color: rgba(229, 62, 62, 0.1);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--accent-color) !important;
+  box-shadow: 0 0 0 3px rgba(246, 173, 85, 0.1) !important;
+}
+
 @media (max-width: 768px) {
   .sidebar {
     transform: translateX(-100%);
@@ -224,5 +308,25 @@ body {
   .timer-controls {
     justify-content: center;
     margin-top: 1rem;
+  }
+  
+  .materias-container {
+    padding: 0;
+  }
+  
+  .table-container {
+    border-radius: 8px;
+    overflow-x: auto;
+  }
+  
+  .materia-row td {
+    padding: 1rem !important;
+    font-size: 0.875rem;
+  }
+  
+  .materia-icon {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
   }
 }

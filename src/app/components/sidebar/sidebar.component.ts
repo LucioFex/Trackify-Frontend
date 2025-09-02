@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -17,7 +17,7 @@ import { CommonModule } from '@angular/common';
       
       <nav class="mt-4">
         <a href="#" class="nav-item active" (click)="selectMenuItem('timesheet')">
-          <span>⏱️</span>
+           [class.active]="selectedItem === 'timesheet'" 
           Timesheet
         </a>
         <a href="#" class="nav-item" (click)="selectMenuItem('calendario')">
@@ -33,7 +33,7 @@ import { CommonModule } from '@angular/common';
           Dashboard
         </a>
         <a href="#" class="nav-item" (click)="selectMenuItem('materias')">
-          <span>📚</span>
+           [class.active]="selectedItem === 'materias'" 
           Materias
         </a>
       </nav>
@@ -42,9 +42,10 @@ import { CommonModule } from '@angular/common';
 })
 export class SidebarComponent {
   selectedItem = 'timesheet';
+  @Output() menuSelected = new EventEmitter<string>();
   
   selectMenuItem(item: string) {
     this.selectedItem = item;
-    // Aquí se implementaría la navegación entre componentes
+    this.menuSelected.emit(item);
   }
 }
