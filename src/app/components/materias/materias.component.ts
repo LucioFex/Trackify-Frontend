@@ -30,7 +30,7 @@ interface Materia {
             class="search-input" 
             placeholder="Buscar materia..."
             [(ngModel)]="searchTerm">
-          <button class="add-button">Añadir</button>
+          <button class="add-button" (click)="openAddModal()">Añadir</button>
         </div>
       </div>
       
@@ -69,6 +69,205 @@ interface Materia {
       
         <div class="materias-tip">
           Tip: desde "Editar" puedes abrir el formulario de Agregar/Editar materia (el que diseñamos) con los datos precargados.
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de Nueva Materia -->
+    <div class="modal-overlay" *ngIf="showAddModal" (click)="closeAddModal()">
+      <div class="add-modal" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <h3 class="modal-title">Nueva materia</h3>
+          <button class="close-btn" (click)="closeAddModal()">×</button>
+        </div>
+        
+        <div class="modal-body">
+          <p class="modal-subtitle">Completa los datos básicos y las notas. A la derecha verás el resumen y la vista previa.</p>
+          
+          <div class="row">
+            <div class="col-md-7">
+              <!-- Nombre de la materia -->
+              <div class="form-group mb-4">
+                <label class="form-label">Nombre de la materia</label>
+                <input 
+                  type="text" 
+                  class="form-control modal-input" 
+                  [(ngModel)]="newMateria.name"
+                  placeholder="Ej: Cálculo I">
+              </div>
+              
+              <!-- Cuatrimestre -->
+              <div class="form-group mb-4">
+                <label class="form-label">Cuatrimestre</label>
+                <select class="form-control modal-input" [(ngModel)]="newMateria.cuatrimestre">
+                  <option value="2025 • 1er cuatrimestre">2025 • 1er cuatrimestre</option>
+                  <option value="2025 • 2do cuatrimestre">2025 • 2do cuatrimestre</option>
+                  <option value="2024 • 2do cuatrimestre">2024 • 2do cuatrimestre</option>
+                </select>
+              </div>
+              
+              <!-- Icono de la materia -->
+              <div class="form-group mb-4">
+                <label class="form-label">Icono de la materia</label>
+                <div class="icon-selector">
+                  <div class="current-icon" [style.background-color]="newMateria.color">
+                    {{ newMateria.icon }}
+                  </div>
+                  <div class="icon-dropdown">
+                    <button class="change-icon-btn" type="button" (click)="toggleIconDropdown()">
+                      Elegir icono
+                    </button>
+                    <div class="icon-options" *ngIf="showIconDropdown">
+                      <div 
+                        *ngFor="let icon of iconOptions"
+                        class="icon-option"
+                        (click)="selectIcon(icon)">
+                        {{ icon }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Color de la serie -->
+              <div class="form-group mb-4">
+                <label class="form-label">Color de la serie</label>
+                <div class="color-palette">
+                  <div 
+                    *ngFor="let color of colorOptions" 
+                    class="color-option"
+                    [class.selected]="newMateria.color === color"
+                    [style.background-color]="color"
+                    (click)="selectNewColor(color)">
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Objetivos -->
+              <div class="form-group mb-4">
+                <label class="form-label text-muted">Objetivos (opcional)</label>
+                <textarea 
+                  class="form-control modal-input" 
+                  rows="3"
+                  [(ngModel)]="newMateria.objetivos"
+                  placeholder="Ej: Aprobación con 8+, reforzar integrales, práctica semanal..."></textarea>
+              </div>
+              
+              <!-- Notas de exámenes -->
+              <div class="form-group mb-4">
+                <label class="form-label">Notas de exámenes</label>
+                <p class="exam-subtitle">Registra los dos parciales y el final para calcular tu rendimiento.</p>
+                
+                <div class="exam-row mb-2">
+                  <label class="exam-label">Parcial 1</label>
+                  <div class="exam-inputs">
+                    <input 
+                      type="number" 
+                      class="form-control exam-input modal-input" 
+                      [(ngModel)]="newMateria.parcial1"
+                      step="0.1"
+                      min="0"
+                      max="10"
+                      placeholder="Ej: 7.5">
+                    <input type="date" class="form-control exam-date-input modal-input">
+                  </div>
+                </div>
+                
+                <div class="exam-row mb-2">
+                  <label class="exam-label">Parcial 2</label>
+                  <div class="exam-inputs">
+                    <input 
+                      type="number" 
+                      class="form-control exam-input modal-input" 
+                      [(ngModel)]="newMateria.parcial2"
+                      step="0.1"
+                      min="0"
+                      max="10"
+                      placeholder="Ej: 7.5">
+                    <input type="date" class="form-control exam-date-input modal-input">
+                  </div>
+                </div>
+                
+                <div class="exam-row">
+                  <label class="exam-label">Final</label>
+                  <div class="exam-inputs">
+                    <input 
+                      type="number" 
+                      class="form-control exam-input modal-input" 
+                      [(ngModel)]="newMateria.final"
+                      step="0.1"
+                      min="0"
+                      max="10"
+                      placeholder="Ej: 7.5">
+                    <input type="date" class="form-control exam-date-input modal-input">
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-md-5">
+              <!-- Resumen -->
+              <div class="summary-card">
+                <h4 class="summary-title">Resumen</h4>
+                <div class="summary-content">
+                  <div class="summary-row">
+                    <span class="summary-label">Materia</span>
+                    <span class="summary-value">{{ newMateria.name || 'Sin nombre' }}</span>
+                  </div>
+                  <div class="summary-row">
+                    <span class="summary-label">Icono</span>
+                    <div class="summary-icon" [style.background-color]="newMateria.color">
+                      {{ newMateria.icon }}
+                    </div>
+                    <span class="summary-label">Color</span>
+                    <div class="summary-color" [style.background-color]="newMateria.color"></div>
+                  </div>
+                  <div class="summary-row">
+                    <span class="summary-label">Notas</span>
+                    <span class="summary-value">P1: {{ newMateria.parcial1 || '—' }} — P2: {{ newMateria.parcial2 || '—' }} — Final: {{ newMateria.final || '—' }}</span>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Vista previa en gráfico -->
+              <div class="chart-preview">
+                <h5 class="chart-title">Vista previa en gráfico</h5>
+                <div class="chart-container">
+                  <svg width="100%" height="200" viewBox="0 0 300 200">
+                    <!-- Grid lines -->
+                    <defs>
+                      <pattern id="newGrid" width="30" height="20" patternUnits="userSpaceOnUse">
+                        <path d="M 30 0 L 0 0 0 20" fill="none" stroke="#e5e7eb" stroke-width="1"/>
+                      </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#newGrid)" />
+                    
+                    <!-- Chart line -->
+                    <polyline
+                      [attr.points]="getNewChartPoints()"
+                      fill="none"
+                      [attr.stroke]="newMateria.color"
+                      stroke-width="3"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"/>
+                    
+                    <!-- Data points -->
+                    <circle 
+                      *ngFor="let point of getNewDataPoints(); let i = index"
+                      [attr.cx]="point.x"
+                      [attr.cy]="point.y"
+                      r="4"
+                      [attr.fill]="newMateria.color"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="modal-footer">
+          <button class="btn btn-secondary" (click)="closeAddModal()">Cancelar</button>
+          <button class="btn btn-warning" (click)="saveNewMateria()">Guardar</button>
         </div>
       </div>
     </div>
@@ -291,16 +490,33 @@ export class MateriasComponent {
   searchTerm = '';
   showEditModal = false;
   showDeleteModal = false;
+  showAddModal = false;
+  showIconDropdown = false;
   materiaToDelete: any = null;
   editingMateria: any = {};
+  newMateria: any = {
+    name: '',
+    icon: '📚',
+    color: '#F59E0B',
+    cuatrimestre: '2025 • 1er cuatrimestre',
+    parcial1: null,
+    parcial2: null,
+    final: null,
+    objetivos: ''
+  };
   
   colorOptions = [
-    '#D2691E', // brown
-    '#9F7AEA', // purple
-    '#48BB78', // green
-    '#2D3748', // dark gray
-    '#E53E3E', // red
-    '#718096'  // gray
+    '#F59E0B', // yellow
+    '#9CA3AF', // gray
+    '#8B5CF6', // purple
+    '#10B981', // green
+    '#1F2937', // dark
+    '#F87171'  // red
+  ];
+
+  iconOptions = [
+    '📚', '💻', '📐', '📊', '💰', '🔬', 
+    '🎨', '📝', '🌍', '⚗️', '🏛️', '🎵'
   ];
   
   materias: Materia[] = [
@@ -368,6 +584,65 @@ export class MateriasComponent {
     );
   }
   
+  openAddModal() {
+    this.newMateria = {
+      name: '',
+      icon: '📚',
+      color: '#F59E0B',
+      cuatrimestre: '2025 • 1er cuatrimestre',
+      parcial1: null,
+      parcial2: null,
+      final: null,
+      objetivos: ''
+    };
+    this.showAddModal = true;
+  }
+  
+  closeAddModal() {
+    this.showAddModal = false;
+    this.showIconDropdown = false;
+  }
+  
+  toggleIconDropdown() {
+    this.showIconDropdown = !this.showIconDropdown;
+  }
+  
+  selectIcon(icon: string) {
+    this.newMateria.icon = icon;
+    this.showIconDropdown = false;
+  }
+  
+  selectNewColor(color: string) {
+    this.newMateria.color = color;
+  }
+  
+  saveNewMateria() {
+    if (!this.newMateria.name.trim()) {
+      return;
+    }
+    
+    const newId = Math.max(...this.materias.map(m => m.id), 0) + 1;
+    const tiempoInvertido = '00:00:00'; // Default time
+    const notas = `${this.newMateria.parcial1 || '—'} • ${this.newMateria.parcial2 || '—'} • ${this.newMateria.final || '—'}`;
+    
+    const materia: Materia = {
+      id: newId,
+      name: this.newMateria.name,
+      icon: this.newMateria.icon,
+      color: this.newMateria.color,
+      cuatrimestre: this.newMateria.cuatrimestre,
+      tiempoInvertido: tiempoInvertido,
+      notas: notas,
+      parcial1: this.newMateria.parcial1 || 0,
+      parcial2: this.newMateria.parcial2 || 0,
+      final: this.newMateria.final || 0,
+      objetivos: this.newMateria.objetivos
+    };
+    
+    this.materias.push(materia);
+    this.closeAddModal();
+  }
+  
   editMateria(materia: Materia) {
     this.editingMateria = { ...materia };
     this.showEditModal = true;
@@ -407,6 +682,23 @@ export class MateriasComponent {
       this.materias[index] = { ...this.editingMateria };
     }
     this.closeModal();
+  }
+  
+  getNewChartPoints(): string {
+    const points = this.getNewDataPoints();
+    return points.map(p => `${p.x},${p.y}`).join(' ');
+  }
+  
+  getNewDataPoints() {
+    const parcial1 = this.newMateria.parcial1 || 0;
+    const parcial2 = this.newMateria.parcial2 || 0;
+    const final = this.newMateria.final || 0;
+    
+    return [
+      { x: 50, y: 180 - (parcial1 * 15) },
+      { x: 150, y: 180 - (parcial2 * 15) },
+      { x: 250, y: 180 - (final * 15) }
+    ];
   }
   
   getChartPoints(): string {
