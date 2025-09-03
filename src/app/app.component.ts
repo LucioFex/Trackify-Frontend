@@ -5,11 +5,12 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { TimesheetComponent } from './components/timesheet/timesheet.component';
 import { MateriasComponent } from './components/materias/materias.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { CalendarioComponent } from './components/calendario/calendario.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, FormsModule, SidebarComponent, TimesheetComponent, MateriasComponent, DashboardComponent],
+  imports: [CommonModule, FormsModule, SidebarComponent, TimesheetComponent, MateriasComponent, DashboardComponent, CalendarioComponent],
   template: `
     <div class="d-flex">
       <app-sidebar (menuSelected)="onMenuSelected($event)"></app-sidebar>
@@ -17,7 +18,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
         <app-timesheet *ngIf="currentView === 'timesheet'"></app-timesheet>
         <app-materias *ngIf="currentView === 'materias'"></app-materias>
         <app-dashboard *ngIf="currentView === 'dashboard'"></app-dashboard>
-        <div *ngIf="currentView !== 'timesheet' && currentView !== 'materias' && currentView !== 'dashboard'" class="text-center mt-5">
+        <app-calendario *ngIf="currentView === 'calendario'"></app-calendario>
+        <div *ngIf="currentView !== 'timesheet' && currentView !== 'materias' && currentView !== 'dashboard' && currentView !== 'calendario'" class="text-center mt-5">
           <h3 class="text-muted">{{ getViewTitle(currentView) }}</h3>
           <p class="text-muted">Esta sección estará disponible próximamente</p>
         </div>
@@ -65,7 +67,8 @@ export class AppComponent {
     const titles: { [key: string]: string } = {
       'calendario': 'Calendario',
       'reportes': 'Reportes',
-      'dashboard': 'Dashboard'
+      'dashboard': 'Dashboard',
+      'materias': 'Materias'
     };
     return titles[view] || view;
   }
