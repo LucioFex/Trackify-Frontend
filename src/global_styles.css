@@ -602,8 +602,9 @@ body {
   align-items: center;
   justify-content: center;
   z-index: 1050;
-  padding: 2rem;
+  padding: 1rem;
   backdrop-filter: blur(4px);
+  overflow-y: auto;
 }
 
 .edit-modal {
@@ -611,10 +612,11 @@ body {
   border-radius: 16px;
   width: 100%;
   max-width: 1000px;
-  max-height: 90vh;
+  max-height: calc(100vh - 2rem);
   overflow-y: auto;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   animation: modalSlideIn 0.3s ease-out;
+  margin: auto;
 }
 
 @keyframes modalSlideIn {
@@ -878,6 +880,70 @@ body {
   border-radius: 8px;
   border: 1px solid #F1F3F4;
   padding: 1rem;
+}
+
+/* Add Modal Styles */
+.add-modal {
+  background: white;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 1000px;
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: modalSlideIn 0.3s ease-out;
+  margin: auto;
+}
+
+.modal-subtitle {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.icon-dropdown {
+  position: relative;
+}
+
+.icon-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 0.5rem;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.5rem;
+  z-index: 1000;
+  min-width: 200px;
+}
+
+.icon-option {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 16px;
+}
+
+.icon-option:hover {
+  background-color: #F3F4F6;
+  transform: scale(1.1);
+}
+
+.exam-subtitle {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+  line-height: 1.4;
 }
 
 /* Delete Modal Styles */
