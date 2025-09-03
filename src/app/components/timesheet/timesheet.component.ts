@@ -103,6 +103,7 @@ interface StudySession {
       padding: 24px;
       background: #f5f5f5;
       min-height: 100vh;
+      margin-left: 250px;
     }
 
     .timesheet-title {

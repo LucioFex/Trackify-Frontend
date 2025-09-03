@@ -23,7 +23,35 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
         </div>
       </div>
     </div>
-  `
+  `,
+  styles: [`
+    .d-flex {
+      display: flex;
+    }
+
+    .main-content {
+      flex: 1;
+      min-height: 100vh;
+    }
+
+    .flex-grow-1 {
+      flex-grow: 1;
+    }
+
+    .text-center {
+      text-align: center;
+      padding: 48px 24px;
+      margin-left: 250px;
+    }
+
+    .mt-5 {
+      margin-top: 3rem;
+    }
+
+    .text-muted {
+      color: #6B7280;
+    }
+  `]
 })
 export class AppComponent {
   title = 'Trackify';

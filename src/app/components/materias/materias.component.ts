@@ -484,7 +484,571 @@ interface Materia {
         </div>
       </div>
     </div>
-  `
+  `,
+  styles: [`
+    .materias-container {
+      padding: 24px;
+      background: #f5f5f5;
+      min-height: 100vh;
+      margin-left: 250px;
+      margin-left: 250px;
+    }
+
+    .materias-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .materias-title {
+      font-size: 28px;
+      font-weight: 600;
+      color: #1F2937;
+      margin: 0;
+    }
+
+    .header-controls {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .search-input {
+      padding: 12px 16px;
+      border: 1px solid #D1D5DB;
+      border-radius: 8px;
+      font-size: 14px;
+      width: 250px;
+    }
+
+    .add-button {
+      background: #F59E0B;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .add-button:hover {
+      background: #D97706;
+    }
+
+    .materias-table-container {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .materias-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .materias-table-header {
+      background: #F9FAFB;
+    }
+
+    .materias-table-header th {
+      padding: 16px 24px;
+      text-align: left;
+      font-size: 12px;
+      font-weight: 600;
+      color: #6B7280;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid #E5E7EB;
+    }
+
+    .materias-table-row {
+      border-bottom: 1px solid #F3F4F6;
+      transition: background-color 0.2s ease;
+    }
+
+    .materias-table-row:hover {
+      background: #F9FAFB;
+    }
+
+    .materias-table-row td {
+      padding: 16px 24px;
+      vertical-align: middle;
+    }
+
+    .materia-cell {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .materia-color-indicator {
+      width: 4px;
+      height: 40px;
+      border-radius: 2px;
+    }
+
+    .materia-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: white;
+    }
+
+    .materia-name {
+      font-weight: 600;
+      color: #1F2937;
+    }
+
+    .cuatrimestre-cell {
+      color: #6B7280;
+      font-size: 14px;
+    }
+
+    .tiempo-cell {
+      font-family: 'SF Mono', monospace;
+    }
+
+    .tiempo-badge {
+      background: #F3F4F6;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    .notas-cell {
+      font-family: 'SF Mono', monospace;
+      font-size: 14px;
+      color: #374151;
+    }
+
+    .acciones-cell {
+      display: flex;
+      gap: 8px;
+    }
+
+    .action-btn {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .edit-btn {
+      background: #EBF8FF;
+      color: #2563EB;
+    }
+
+    .edit-btn:hover {
+      background: #DBEAFE;
+    }
+
+    .delete-btn {
+      background: #FEF2F2;
+      color: #DC2626;
+    }
+
+    .delete-btn:hover {
+      background: #FEE2E2;
+    }
+
+    .materias-tip {
+      padding: 16px 24px;
+      background: #F9FAFB;
+      border-top: 1px solid #E5E7EB;
+      font-size: 14px;
+      color: #6B7280;
+      font-style: italic;
+    }
+
+    /* Modal Styles */
+    .modal-header {
+      padding: 24px 24px 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #E5E7EB;
+      margin-bottom: 24px;
+    }
+
+    .modal-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: #1F2937;
+      margin: 0;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: #6B7280;
+      cursor: pointer;
+      padding: 0;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      transition: background 0.2s ease;
+    }
+
+    .close-btn:hover {
+      background: #F3F4F6;
+    }
+
+    .modal-body {
+      padding: 0 24px 24px 24px;
+    }
+
+    .modal-subtitle {
+      color: #6B7280;
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    .row {
+      display: flex;
+      gap: 24px;
+    }
+
+    .col-md-7 {
+      flex: 0 0 58.333333%;
+    }
+
+    .col-md-5, .col-md-6 {
+      flex: 1;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 8px;
+    }
+
+    .form-label.text-muted {
+      color: #6B7280;
+      font-weight: 500;
+    }
+
+    .modal-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid #D1D5DB;
+      border-radius: 8px;
+      font-size: 14px;
+      color: #374151;
+      background: white;
+      transition: border-color 0.2s ease;
+    }
+
+    .modal-input:focus {
+      outline: none;
+      border-color: #F59E0B;
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+    }
+
+    .icon-selector {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .current-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: white;
+    }
+
+    .icon-dropdown {
+      position: relative;
+    }
+
+    .change-icon-btn {
+      background: #F3F4F6;
+      border: 1px solid #D1D5DB;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 14px;
+      color: #374151;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .change-icon-btn:hover {
+      background: #E5E7EB;
+    }
+
+    .icon-options {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: white;
+      border: 1px solid #D1D5DB;
+      border-radius: 8px;
+      padding: 8px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      z-index: 10;
+    }
+
+    .icon-option {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .icon-option:hover {
+      background: #F3F4F6;
+    }
+
+    .color-palette {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .color-option {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    .color-option:hover {
+      transform: scale(1.1);
+    }
+
+    .color-option.selected {
+      border-color: #1F2937;
+      transform: scale(1.1);
+    }
+
+    .exam-subtitle {
+      font-size: 14px;
+      color: #6B7280;
+      margin-bottom: 16px;
+    }
+
+    .exam-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+
+    .exam-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: #374151;
+      min-width: 80px;
+    }
+
+    .exam-inputs {
+      display: flex;
+      gap: 12px;
+      flex: 1;
+    }
+
+    .exam-input {
+      width: 100px;
+    }
+
+    .exam-date-input {
+      width: 150px;
+    }
+
+    .summary-card {
+      background: #F9FAFB;
+      border: 1px solid #E5E7EB;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .summary-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1F2937;
+      margin: 0 0 16px 0;
+    }
+
+    .summary-content {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .summary-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .summary-label {
+      font-size: 14px;
+      color: #6B7280;
+      min-width: 60px;
+    }
+
+    .summary-value {
+      font-size: 14px;
+      color: #374151;
+      font-weight: 500;
+    }
+
+    .summary-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: white;
+    }
+
+    .summary-color {
+      width: 16px;
+      height: 16px;
+      border-radius: 3px;
+      border: 1px solid #D1D5DB;
+    }
+
+    .chart-preview {
+      background: #F9FAFB;
+      border: 1px solid #E5E7EB;
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .chart-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #374151;
+      margin: 0 0 16px 0;
+    }
+
+    .chart-container {
+      background: white;
+      border-radius: 8px;
+      padding: 16px;
+      border: 1px solid #E5E7EB;
+    }
+
+    .modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid #E5E7EB;
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+    }
+
+    .btn-secondary {
+      background: #F3F4F6;
+      color: #374151;
+    }
+
+    .btn-secondary:hover {
+      background: #E5E7EB;
+    }
+
+    .btn-warning {
+      background: #F59E0B;
+      color: white;
+    }
+
+    .btn-warning:hover {
+      background: #D97706;
+    }
+
+    .btn-danger {
+      background: #DC2626;
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background: #B91C1C;
+    }
+
+    .delete-confirmation {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .warning-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+
+    .delete-confirmation h4 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1F2937;
+      margin-bottom: 12px;
+    }
+
+    .delete-warning {
+      color: #6B7280;
+      margin-bottom: 16px;
+    }
+
+    .delete-items {
+      text-align: left;
+      color: #6B7280;
+      margin: 16px 0;
+      padding-left: 20px;
+    }
+
+    .delete-note {
+      color: #DC2626;
+      font-weight: 500;
+      font-size: 14px;
+    }
+  `]
 })
 export class MateriasComponent {
   searchTerm = '';

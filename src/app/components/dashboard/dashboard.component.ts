@@ -27,35 +27,31 @@ interface ChartData {
             <button 
               class="period-btn" 
               [class.active]="selectedPeriod === 'semana'"
-              (click)="selectPeriod('semana')">
+              (click)="setPeriod('semana')">
               Semana
             </button>
             <button 
               class="period-btn" 
               [class.active]="selectedPeriod === 'mes'"
-              (click)="selectPeriod('mes')">
+              (click)="setPeriod('mes')">
               Mes
             </button>
           </div>
-          <div class="date-range">
-            <span>26 Ago - 1 Sep 2025</span>
-          </div>
+          <div class="date-range">26 Ago - 1 Sep 2025</div>
           <button class="apply-btn">Aplicar</button>
         </div>
       </div>
 
       <div class="dashboard-grid">
         <!-- Performance Académico -->
-        <div class="dashboard-card performance-card">
+        <div class="dashboard-card">
           <h3 class="card-title">Performance académico</h3>
           <div class="performance-content">
             <div class="performance-score">
               <span class="score-label">Promedio:</span>
               <span class="score-value">7.8</span>
             </div>
-            <div class="performance-goal">
-              <span class="goal-label">Meta 8.0</span>
-            </div>
+            <div class="performance-goal">Meta 8.0</div>
             <div class="performance-bar">
               <div class="performance-progress" [style.width.%]="97.5"></div>
             </div>
@@ -63,22 +59,27 @@ interface ChartData {
         </div>
 
         <!-- Tiempo invertido por semana -->
-        <div class="dashboard-card time-chart-card">
+        <div class="dashboard-card">
           <h3 class="card-title">Tiempo invertido por semana</h3>
           <div class="time-chart">
-            <svg width="100%" height="200" viewBox="0 0 400 200">
-              <!-- Chart segments -->
-              <g transform="translate(200, 100)">
-                <path 
+            <svg width="200" height="200" viewBox="0 0 200 200">
+              <!-- Donut chart -->
+              <g transform="translate(100, 100)">
+                <circle 
                   *ngFor="let segment of pieSegments; let i = index"
-                  [attr.d]="segment.path"
-                  [attr.fill]="segment.color"
-                  [attr.stroke]="'white'"
-                  stroke-width="2"/>
+                  cx="0" 
+                  cy="0" 
+                  r="70"
+                  fill="none"
+                  [attr.stroke]="segment.color"
+                  stroke-width="20"
+                  [attr.stroke-dasharray]="segment.dashArray"
+                  [attr.stroke-dashoffset]="segment.dashOffset"
+                  transform="rotate(-90)"/>
               </g>
               <!-- Center text -->
-              <text x="200" y="95" text-anchor="middle" class="total-hours-label">Total:</text>
-              <text x="200" y="115" text-anchor="middle" class="total-hours-value">35h</text>
+              <text x="100" y="95" text-anchor="middle" class="total-hours-label">Total:</text>
+              <text x="100" y="115" text-anchor="middle" class="total-hours-value">35h</text>
             </svg>
             <div class="chart-legend">
               <div *ngFor="let item of chartData" class="legend-item">
@@ -90,7 +91,7 @@ interface ChartData {
         </div>
 
         <!-- Horas por actividad y materia -->
-        <div class="dashboard-card activity-chart-card">
+        <div class="dashboard-card">
           <h3 class="card-title">Horas por actividad y materia</h3>
           <div class="activity-chart">
             <div class="chart-bars">
@@ -98,19 +99,19 @@ interface ChartData {
                 <div class="bar-container">
                   <div class="stacked-bar">
                     <div 
-                      class="bar-segment teoria"
+                      class="bar-segment"
                       [style.height.%]="(item.activities.teoria / getMaxHours()) * 100"
-                      [style.background-color]="'#60A5FA'">
+                      style="background-color: #60A5FA;">
                     </div>
                     <div 
-                      class="bar-segment practica"
+                      class="bar-segment"
                       [style.height.%]="(item.activities.practica / getMaxHours()) * 100"
-                      [style.background-color]="'#34D399'">
+                      style="background-color: #34D399;">
                     </div>
                     <div 
-                      class="bar-segment repaso"
+                      class="bar-segment"
                       [style.height.%]="(item.activities.repaso / getMaxHours()) * 100"
-                      [style.background-color]="'#FBBF24'">
+                      style="background-color: #FBBF24;">
                     </div>
                   </div>
                   <div class="bar-total">{{ item.hours.toFixed(1) }}h</div>
@@ -139,7 +140,7 @@ interface ChartData {
         </div>
 
         <!-- Total de horas invertidas por materia -->
-        <div class="dashboard-card total-hours-card">
+        <div class="dashboard-card">
           <h3 class="card-title">Total de horas invertidas por materia</h3>
           <div class="total-hours-chart">
             <div class="simple-bars">
@@ -165,6 +166,7 @@ interface ChartData {
       padding: 24px;
       background: #f5f5f5;
       min-height: 100vh;
+      margin-left: 250px;
     }
 
     .dashboard-header {
@@ -294,6 +296,7 @@ interface ChartData {
     .performance-goal {
       font-size: 14px;
       color: #6B7280;
+      margin-bottom: 8px;
     }
 
     .performance-bar {
@@ -410,7 +413,6 @@ interface ChartData {
       font-size: 12px;
       color: #6B7280;
       text-align: center;
-      writing-mode: horizontal-tb;
     }
 
     .activity-legend {
@@ -435,13 +437,14 @@ interface ChartData {
     /* Total Hours Chart (Simple Bars) */
     .total-hours-chart {
       height: 200px;
+      padding: 20px 0;
     }
 
     .simple-bars {
       display: flex;
-      align-items: end;
+      align-items: flex-end;
       gap: 32px;
-      height: 180px;
+      height: 160px;
       padding: 0 16px;
     }
 
@@ -457,13 +460,14 @@ interface ChartData {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 8px;
-      height: 160px;
+      justify-content: flex-end;
+      gap: 4px;
+      height: 140px;
     }
 
     .simple-bar {
       width: 50px;
-      background: #D2691E;
+      min-height: 4px;
       border-radius: 4px 4px 0 0;
       transition: height 0.3s ease;
     }
@@ -483,6 +487,7 @@ interface ChartData {
     @media (max-width: 768px) {
       .dashboard-container {
         padding: 16px;
+        margin-left: 0;
       }
 
       .dashboard-header {
@@ -548,47 +553,26 @@ export class DashboardComponent {
 
   get pieSegments() {
     const total = this.chartData.reduce((sum, item) => sum + item.hours, 0);
-    let currentAngle = 0;
-    const radius = 80;
-    const innerRadius = 50;
+    const circumference = 2 * Math.PI * 70;
+    let currentOffset = 0;
 
     return this.chartData.map(item => {
-      const percentage = item.hours / total;
-      const angle = percentage * 2 * Math.PI;
+      const percentage = (item.hours / total) * 100;
+      const dashLength = (percentage / 100) * circumference;
+      const dashArray = `${dashLength} ${circumference}`;
+      const dashOffset = -currentOffset;
       
-      const startAngle = currentAngle;
-      const endAngle = currentAngle + angle;
-      
-      const x1 = Math.cos(startAngle) * radius;
-      const y1 = Math.sin(startAngle) * radius;
-      const x2 = Math.cos(endAngle) * radius;
-      const y2 = Math.sin(endAngle) * radius;
-      
-      const x3 = Math.cos(endAngle) * innerRadius;
-      const y3 = Math.sin(endAngle) * innerRadius;
-      const x4 = Math.cos(startAngle) * innerRadius;
-      const y4 = Math.sin(startAngle) * innerRadius;
-      
-      const largeArc = angle > Math.PI ? 1 : 0;
-      
-      const path = [
-        `M ${x1} ${y1}`,
-        `A ${radius} ${radius} 0 ${largeArc} 1 ${x2} ${y2}`,
-        `L ${x3} ${y3}`,
-        `A ${innerRadius} ${innerRadius} 0 ${largeArc} 0 ${x4} ${y4}`,
-        'Z'
-      ].join(' ');
-      
-      currentAngle += angle;
+      currentOffset += dashLength;
       
       return {
-        path,
-        color: item.color
+        color: item.color,
+        dashArray: dashArray,
+        dashOffset: dashOffset
       };
     });
   }
 
-  selectPeriod(period: string) {
+  setPeriod(period: string) {
     this.selectedPeriod = period;
   }
 
